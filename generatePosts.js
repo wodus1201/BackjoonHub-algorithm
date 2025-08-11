@@ -1,19 +1,22 @@
 const fs = require("fs");
 const path = require("path");
 
-const baseDir = "BackjoonHub-algorithm/node.js/백준/Bronze"; // 문제 폴더 경로
-const postsDir = "wodus1201.github.io/_posts/학습기록"; // 깃허브 페이지 포스트 경로
+const baseDir = path.join(__dirname, "node.js/백준/Bronze");
+const postsDir = path.join(__dirname, "../wodus1201.github.io/_posts/학습기록");
 
 function formatDate(date) {
   return date.toISOString().slice(0, 10);
 }
 
 function createMarkdownForFolder(folderName) {
+  // 폴더명 내 넓은 공백 및 특수 공백을 일반 하이픈으로 교체
+  const sanitizedFolderName = folderName.replace(/[\s\u2000-\u200A\u202F\u205F\u3000]+/g, "-");
   const folderPath = path.join(baseDir, folderName);
   const postDate = formatDate(new Date());
-  const sanitizedFolderName = folderName.replace(/\s+/g, "-");
   const postFileName = `${postDate}-${sanitizedFolderName}.md`;
   const postFilePath = path.join(postsDir, postFileName);
+
+  console.log(`Looking for folder: ${folderPath}`);
 
   if (!fs.existsSync(folderPath)) {
     console.error(`Folder ${folderPath} not found`);

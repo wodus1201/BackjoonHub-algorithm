@@ -30,7 +30,6 @@ jobs:
       - name: Find all folders and generate posts
         run: |
           cd node.js/백준/Bronze
-          # 기존에 있는 모든 폴더를 리스트업
           folders=$(ls -d */ | sed 's#/##')
           echo "All folders: $folders"
           for folder in $folders; do
