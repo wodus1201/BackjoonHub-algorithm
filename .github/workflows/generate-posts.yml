@@ -20,7 +20,7 @@ jobs:
         with:
           repository: wodus1201/wodus1201.github.io
           path: wodus1201.github.io
-          token: ${{ secrets.GH_PAGES_PAT }}
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
