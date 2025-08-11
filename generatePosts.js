@@ -58,11 +58,25 @@ ${jsContents}
   console.log(`Created post: ${postFileName}`);
 }
 
-// 새 폴더 이름 인자로 받아 실행
-const newFolderName = process.argv[2];
-if (!newFolderName) {
-  console.error("Usage: node generatePosts.js <folderName>");
-  process.exit(1);
+function createMarkdownForAllFolders() {
+  if (!fs.existsSync(baseDir)) {
+    console.error(`Base directory ${baseDir} does not exist`);
+    return;
+  }
+  const folders = fs.readdirSync(baseDir).filter((f) => {
+    const fullPath = path.join(baseDir, f);
+    return fs.statSync(fullPath).isDirectory();
+  });
+
+  folders.forEach((folder) => {
+    createMarkdownForFolder(folder);
+  });
 }
 
-createMarkdownForFolder(newFolderName);
+// 새 폴더 이름 인자로 받아 실행, 없으면 전체 폴더 대상
+const newFolderName = process.argv[2];
+if (newFolderName) {
+  createMarkdownForFolder(newFolderName);
+} else {
+  createMarkdownForAllFolders();
+}
