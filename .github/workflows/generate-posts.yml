@@ -1,0 +1,50 @@
+name: Generate Blog Posts on New Folder
+
+on:
+  push:
+    paths:
+      - "node.js/백준/Bronze/**" # 백준 폴더 변경 감지
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout BackjoonHub-algorithm repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Checkout GitHub Pages repo
+        uses: actions/checkout@v3
+        with:
+          repository: wodus1201/wodus1201.github.io
+          path: wodus1201.github.io
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Find all folders and generate posts
+        run: |
+          cd node.js/백준/Bronze
+          # 기존에 있는 모든 폴더를 리스트업
+          folders=$(ls -d */ | sed 's#/##')
+          echo "All folders: $folders"
+          for folder in $folders; do
+            if [ -d "$folder" ]; then
+              node ../../../generatePosts.js "$folder"
+            fi
+          done
+        working-directory: ${{ github.workspace }}
+
+      - name: Commit & push changes to GitHub Pages repo
+        run: |
+          cd wodus1201.github.io
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _posts/학습기록/*.md
+          git diff --quiet && echo "No changes to commit" || git commit -m "Auto generate posts from all problem folders"
+          git push
