@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const baseDir = path.join(__dirname, "node.js/백준/Bronze");
-const postsDir = path.join(__dirname, "../wodus1201.github.io/_posts/학습기록");
+const postsDir = path.join(__dirname, "../../wodus1201.github.io/_posts/학습기록");
 
 function formatDate(date) {
   return date.toISOString().slice(0, 10);
@@ -51,6 +51,9 @@ ${readmeContent}
 ${jsContents}
 `;
 
+  if (!fs.existsSync(postsDir)) {
+    fs.mkdirSync(postsDir, { recursive: true });
+  }
   fs.writeFileSync(postFilePath, mdContent);
   console.log(`Created post: ${postFileName}`);
 }
