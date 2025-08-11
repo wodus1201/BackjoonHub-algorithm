@@ -37,6 +37,10 @@ jobs:
         env:
           POSTS_DIR: ${{ github.workspace }}/wodus1201.github.io/_posts/학습기록
 
+      - name: Check generated markdown files # <= 커밋/푸시 전에 파일 확인
+        run: |
+          ls -al ${{ github.workspace }}/wodus1201.github.io/_posts/학습기록
+
       - name: Commit & push changes to GitHub Pages repo
         run: |
           cd wodus1201.github.io
