@@ -35,17 +35,17 @@ jobs:
           node ../../../generatePosts.js "$folder"
           done
         env:
-          POSTS_DIR: ${{ github.workspace }}/wodus1201.github.io/_posts/학습기록
+          POSTS_DIR: ${{ github.workspace }}/wodus1201.github.io/_posts/백준
 
       - name: Check generated markdown files # <= 커밋/푸시 전에 파일 확인
         run: |
-          ls -al ${{ github.workspace }}/wodus1201.github.io/_posts/학습기록
+          ls -al ${{ github.workspace }}/wodus1201.github.io/_posts/백준
 
       - name: Commit & push changes to GitHub Pages repo
         run: |
           cd wodus1201.github.io
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add _posts/학습기록/*.md
+          git add _posts/백준/*.md
           git diff --quiet && echo "No changes to commit" || git commit -m "Auto generate posts from all problem folders"
           git push

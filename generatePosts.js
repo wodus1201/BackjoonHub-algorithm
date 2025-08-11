@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const baseDir = path.join(__dirname, "node.js/백준/Bronze");
-const postsDir = process.env.POSTS_DIR || path.join(__dirname, "../../wodus1201.github.io/_posts/학습기록");
+const postsDir = process.env.POSTS_DIR || path.join(__dirname, "../../wodus1201.github.io/_posts/백준");
 console.log("postsDir:", postsDir);
 
 function formatDate(date) {
@@ -60,7 +60,7 @@ function createMarkdownForFolder(folderName) {
 
   // 마크다운 템플릿 작성
   const mdContent = `---
-categories: [학습기록]
+categories: [백준]
 tags: [study, baekjun]
 ---
 
