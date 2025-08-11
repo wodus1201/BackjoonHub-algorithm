@@ -31,13 +31,11 @@ jobs:
         run: |
           cd node.js/백준/Bronze
           folders=$(ls -d */ | sed 's#/##')
-          echo "All folders: $folders"
           for folder in $folders; do
-            if [ -d "$folder" ]; then
-              node ../../../generatePosts.js "$folder"
-            fi
+          node ../../../generatePosts.js "$folder"
           done
-        working-directory: ${{ github.workspace }}
+        env:
+          POSTS_DIR: ${{ github.workspace }}/wodus1201.github.io/_posts/학습기록
 
       - name: Commit & push changes to GitHub Pages repo
         run: |

@@ -2,7 +2,8 @@ const fs = require("fs");
 const path = require("path");
 
 const baseDir = path.join(__dirname, "node.js/백준/Bronze");
-const postsDir = path.join(__dirname, "../../wodus1201.github.io/_posts/학습기록");
+const postsDir = process.env.POSTS_DIR || path.join(__dirname, "../../wodus1201.github.io/_posts/학습기록");
+console.log("postsDir:", postsDir);
 
 function formatDate(date) {
   return date.toISOString().slice(0, 10);
